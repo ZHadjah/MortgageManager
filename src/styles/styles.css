@@ -7,7 +7,7 @@ body{
 }
 
 .container{
-    margin-top: -0.9375rem;
+    margin-top: 20px;
     
 }
 
@@ -96,11 +96,11 @@ nav #sticky{
         margin-bottom: 25px;
     }
 
-    #githubLink #portfolioLink{
+    #githublink #portfoliolink{
         background-color: #555;
     }
 
-    .nav #navbar #githubLink, .nav #navbar #portfolioLink{
+    .nav #navbar #githublink, .nav #navbar #portfoliolink{
         margin-bottom: 0px;
 
     }

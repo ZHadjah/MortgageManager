@@ -1,35 +1,25 @@
-import './App.css';
+import './styles/App.css';
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../src/styles/styles.css";
-
-import Home from "./pages/home";
-import Code from "./pages/code";
-import Solve from "./pages/solve";
+import Home from "./components/pages/home";
+import Code from "./components/pages/code";
+import Solve from "./components/pages/solve";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <>
-       <Navbar githubLink='https://github.com/ZHadjah/tacocatgrammar' portfolioLink='https://zachhadjah.netlify.app/' />
+       <Navbar githublink='https://github.com/ZHadjah/MortgageManager' portfoliolink='https://zachhadjah.netlify.app/' />
 
 
-       <h1>TESTING</h1>
-       <h1>TESTING</h1>
-       <h1>TESTING</h1>
-       <h1>TESTING</h1>
-       <h1>TESTING</h1>
-
-      {/* <div className="container">
+       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/code" element={<Code />} />
           <Route path="/solve" element={<Solve />} />
         </Routes>
-      </div> */}
-
-
-
-
+      </div>
     </>
   );
 }

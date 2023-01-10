@@ -1,6 +1,14 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "./styles/styles.css";
 
-function Navbar({ githubLink, portfolioLink }) {
+
+export const openInNewTab = (url) => {
+    window.open(url, "_blank");
+  };
+  
+
+function Navbar({ githublink, portfoliolink }) {
 
     //sticky navbar
     // const [sticky, setSticky] = useState(false);
@@ -15,40 +23,40 @@ function Navbar({ githubLink, portfolioLink }) {
   
   
     //hamburger icon for responsive layout
-    // const [clicked, setClicked] = useState(false);
-    // function handleClick() {
-    //   setClicked(!clicked);
-    // }
+    const [clicked, setClicked] = useState(false);
+    function handleClick() {
+      setClicked(!clicked);
+    }
   
     //navbar component
     return (
       <nav /*id={`${sticky ? "sticky" : ""}`} */ className="nav">
         <Link>Mortgage Manager</Link>
   
-        <ul id="navbar" /*className={clicked ? "#navbar active" : "#navbar"}*/>
-          <CustomLink to="/">🌮Home</CustomLink>
-          <CustomLink to="/solve">🌮Solve</CustomLink>
-          <CustomLink to="/code">🌮Code</CustomLink>
+        <ul id="navbar" className={clicked ? "#navbar active" : "#navbar"}>
+          <CustomLink to="/">🏡Home</CustomLink>
+          <CustomLink to="/solve">💰Solve</CustomLink>
+          <CustomLink to="/code">💰Code</CustomLink>
           <Link
-            id="githubLink"
-            // githubLink={githubLink}
-            // onClick={() => openInNewTab(githubLink)}
+            id="githublink"
+            githublink={githublink}
+            onClick={() => openInNewTab(githublink)}
           >
-            🌮Github
+            💰Github
           </Link>
           <Link
-            id="portfolioLink"
-            // portfolioLink={portfolioLink}
-            // onClick={() => openInNewTab(portfolioLink)}
+            id="portfoliolink"
+            portfoliolink={portfoliolink}
+            onClick={() => openInNewTab(portfoliolink)}
           >
-            🌮Portfolio
+            💰Portfolio
           </Link>
         </ul>
         <div id="mobile">
           <i
             id="bar"
-            // className={clicked ? "fas fa-times" : "fas fa-bars"}
-            // onClick={() => handleClick()}
+            className={clicked ? "fas fa-times" : "fas fa-bars"}
+            onClick={() => handleClick()}
           ></i>
         </div>
       </nav>

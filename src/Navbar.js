@@ -11,15 +11,15 @@ export const openInNewTab = (url) => {
 function Navbar({ githublink, portfoliolink }) {
 
     //sticky navbar
-    // const [sticky, setSticky] = useState(false);
+    const [sticky, setSticky] = useState(false);
   
-    // useEffect(() => {
-    //   const handleScroll = () => {
-    //     setSticky(window.scrollY > 200)
-    //   }
-    //   window.addEventListener('scroll', handleScroll)
-    //   return () => window.removeEventListener('scroll', handleScroll)
-    // })  
+    useEffect(() => {
+      const handleScroll = () => {
+        setSticky(window.scrollY > 200)
+      }
+      window.addEventListener('scroll', handleScroll)
+      return () => window.removeEventListener('scroll', handleScroll)
+    })  
   
   
     //hamburger icon for responsive layout
@@ -30,7 +30,7 @@ function Navbar({ githublink, portfoliolink }) {
   
     //navbar component
     return (
-      <nav /*id={`${sticky ? "sticky" : ""}`} */ className="nav">
+      <nav id={`${sticky ? "sticky" : ""}`}  className="nav">
         <Link>Mortgage Manager</Link>
   
         <ul id="navbar" className={clicked ? "#navbar active" : "#navbar"}>

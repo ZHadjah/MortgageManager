@@ -98,6 +98,7 @@ nav #sticky{
 
     #githublink #portfoliolink{
         background-color: #555;
+        /* display: block; padding-top: 10px; */
     }
 
     .nav #navbar #githublink, .nav #navbar #portfoliolink{
@@ -112,5 +113,9 @@ nav #sticky{
     #mobile i{
         font-size: 24px;
         cursor: pointer;
+    }
+
+    .a {
+        display: block;
     }
 }

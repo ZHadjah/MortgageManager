@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
+import { useDownloadExcel } from "react-export-table-to-excel";
+import { useForm } from "react-hook-form";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 
 export default function Solve() {
   function handleOnSubmit(e) {
     //prevent the page from refreshing
     e.preventDefault();
+
+
 
     let loanAmount = parseInt(document.getElementById("loanAmount").value);
     let months = parseInt(document.getElementById("months").value);
@@ -19,6 +25,13 @@ export default function Solve() {
     let interestRate = parseFloat(
       document.getElementById("interestRate").value
     );
+
+
+      if( !loanAmount || !months || !interestRate ){
+        alert('Please fill out all input fields')
+        return
+      }
+
 
     //Keep track of interest payments
     let interest = new Array();
@@ -95,13 +108,22 @@ export default function Solve() {
     ).toFixed(2)}`;
   }
 
+  const tableRef = useRef(null);
+
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "Mortgage Info",
+    sheet: "Mortgage Info",
+  });
+
+  //export to excel button
+  const [show, setShow] = useState(false);
+  
   return (
     <>
       <Container fluid>
         <Row>
-          <Col
-            md={4} className="square border border-dark"
-          >
+          <Col md={4} className="square border border-dark">
             <form onSubmit={handleOnSubmit}>
               <Row className="mt-3">
                 <Col>
@@ -109,6 +131,7 @@ export default function Solve() {
                 </Col>
                 <Col md={5}>
                   <input
+                    name="loanAmount"
                     type="number"
                     className="form-control"
                     id="loanAmount"
@@ -122,6 +145,7 @@ export default function Solve() {
                 </Col>
                 <Col md={5}>
                   <input
+                    name="months"
                     type="number"
                     className="form-control"
                     id="months"
@@ -135,6 +159,7 @@ export default function Solve() {
                 </Col>
                 <Col md={5}>
                   <input
+                    name="rate"
                     type="number"
                     className="form-control"
                     id="interestRate"
@@ -145,6 +170,7 @@ export default function Solve() {
               <Row className="text-center">
                 <Col className="pb-3">
                   <Button
+                    onClick={() => setShow(true)}
                     className="btn btn-success"
                     type="submit"
                   >
@@ -154,10 +180,8 @@ export default function Solve() {
               </Row>
             </form>
           </Col>
-   
 
-
-          <Col  className="square border border-success">
+          <Col className="square border border-success">
             <Row className="text-center">
               <Col>
                 <h3>Your Monthly Payments</h3>
@@ -170,41 +194,63 @@ export default function Solve() {
               </Col>
             </Row>
 
-
             <Container className="text-center">
               <Row className="text-center">
-              <Col className="offset-2" style={{textAlign: "left"}}>
-                <h5>Total Principal</h5>
-              </Col>
-              <Col>
-                <h5 className="offset-2" id="totalPrincipalOutput" style={{textAlign: "left"}}>
-                  $0.00
-                </h5>
-              </Col>
+                <Col className="offset-2" style={{ textAlign: "left" }}>
+                  <h5>Total Principal</h5>
+                </Col>
+                <Col>
+                  <h5
+                    className="offset-2"
+                    id="totalPrincipalOutput"
+                    style={{ textAlign: "left" }}
+                  >
+                    $0.00
+                  </h5>
+                </Col>
               </Row>
 
               <Row className="text-center">
-              <Col className="offset-2" style={{textAlign: "left"}}>
-                <h5>Total Interest</h5>
-              </Col>
+                <Col className="offset-2" style={{ textAlign: "left" }}>
+                  <h5>Total Interest</h5>
+                </Col>
 
-              <Col>
-                <h5 className="offset-2" id="totalInterestOutput" style={{textAlign: "left"}}>
-                  $0.00
-                </h5>
-              </Col>
+                <Col>
+                  <h5
+                    className="offset-2"
+                    id="totalInterestOutput"
+                    style={{ textAlign: "left" }}
+                  >
+                    $0.00
+                  </h5>
+                </Col>
               </Row>
 
               <Row className="text-center">
-              <Col className="offset-2" style={{textAlign: "left"}}>
-                <h5>Total Cost</h5>
-              </Col>
-              <Col>
-                <h5 className="offset-2" id="totalCostOutput" style={{textAlign: "left"}}>$0.00</h5>
-              </Col>
+                <Col className="offset-2" style={{ textAlign: "left" }}>
+                  <h5>Total Cost</h5>
+                </Col>
+                <Col>
+                  <h5
+                    className="offset-2"
+                    id="totalCostOutput"
+                    style={{ textAlign: "left" }}
+                  >
+                    $0.00
+                  </h5>
+                </Col>
               </Row>
-           </Container>
 
+              <Row className="text-center">
+                <Col>
+                  {show && (
+                    <Button className="btn btn-success" onClick={onDownload}>
+                      Export to Excel
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+            </Container>
 
             <br />
           </Col>
@@ -213,7 +259,7 @@ export default function Solve() {
 
       <Container fluid>
         <Row>
-          <Table striped bordered hover variant="success">
+          <Table striped bordered hover variant="success" ref={tableRef}>
             <thead>
               <tr>
                 <th>Month</th>
@@ -233,14 +279,13 @@ export default function Solve() {
 }
 
 Table.borderStyle = {
-  borderStyle:"groove"
-}
+  borderStyle: "groove",
+};
 
 Table.borderWidth = {
-  borderWidth:"1px"
-}
+  borderWidth: "1px",
+};
 
 Table.borderRadius = {
-  borderRadius:"4px"
-}
-
+  borderRadius: "4px",
+};

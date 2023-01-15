@@ -1,8 +1,7 @@
-import Prism from 'prismjs';
 import "../../styles/prism.css";
 
 
-function code() {
+export default function code() {
   return (
     <div className="row">
         <div className="col pt-1">
@@ -104,4 +103,3 @@ function code() {
     </div>
   )
 }
-export default code
